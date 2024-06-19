@@ -184,9 +184,10 @@ void CN0391_init() {
 
    // Set AD7124_Filter_0 0x21
    regNr = AD7124_Filter_0;
-   setValue = AD7124_ReadDeviceRegister(regNr);
-   setValue |= AD7124_FILT_REG_FILTER(2);                     // set SINC3
-   setValue |= AD7124_FILT_REG_FS(384);                     //FS = 48 => 50 SPS LOW power
+   setValue = 0; // Avoid interference with nonzero Power-On/Reset Value
+   setValue |= AD7124_FILT_REG_FILTER(2);	// set SINC3
+   setValue |= FILT_REG_POST_FILTER(3);		// Keep default POST_FILTER setting	
+   setValue |= AD7124_FILT_REG_FS(384);         //FS = 48 => 50 SPS LOW power
    setValue &= 0xFFFFFF;
    AD7124_WriteDeviceRegister(regNr, setValue);// Write data to _ADC
 
@@ -236,11 +237,12 @@ void CN0391_init() {
    setValue &= 0xFFFF;
    AD7124_WriteDeviceRegister(regNr, setValue);   // Write data to _ADC
 
-   // Set AD7124_Filter_0 0x21
+   // Set AD7124_Filter_1 0x22
    regNr = AD7124_Filter_1;
-   setValue = AD7124_ReadDeviceRegister(regNr);
-   setValue |= AD7124_FILT_REG_FILTER(2);                     // set SINC3
-   setValue |= AD7124_FILT_REG_FS(384);                     //FS = 48 => 50 SPS
+   setValue = 0;				// Avoid interference with nonzero Power-ON/reset Value
+   setValue |= AD7124_FILT_REG_FILTER(2);	// set SINC3
+   setValue |= FILT_REG_POST_FILTER(3);		// Keep default POST_FILTER setting	
+   setValue |= AD7124_FILT_REG_FS(384);		//FS = 48 => 50 SPS
    setValue &= 0xFFFFFF;
    AD7124_WriteDeviceRegister(regNr, setValue);// Write data to _ADC
 
